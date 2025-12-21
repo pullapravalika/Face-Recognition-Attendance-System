@@ -1,1 +1,31 @@
-Single-database configuration for Flask.
+# Real-Time Face Recognition Attendance Tracking App
+
+## Description
+This is a real-time face recognition based attendance tracking application.
+It captures faces through a camera and automatically marks attendance.
+
+## Technologies Used
+- Python
+- OpenCV
+- Dlib
+- Face Recognition (AI-based)
+- NumPy
+- AI
+
+## Features
+- Real-time face detection and recognition
+- Automatic attendance marking
+- Attendance stored in CSV file
+- Reduces manual effort
+
+## How to Run
+1. Clone the repository
+2. Install dependencies:
+   pip install -r requirements.txt
+3. Run the application:
+   python app.py
+
+## Applications
+- Colleges and Schools
+- Offices
+- Secure Organizations
