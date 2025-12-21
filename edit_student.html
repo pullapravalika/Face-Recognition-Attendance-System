@@ -1,0 +1,35 @@
+{% extends 'admin/base.html' %}
+{% block title %}Edit Student{% endblock %}
+{% block content %}
+
+<h3>Edit Student Profile</h3>
+<form method="POST">
+  <div class="form-group">
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ student.name }}" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label>Email:</label>
+    <input type="email" name="email" value="{{ student.email }}" class="form-control" required>
+  </div>
+  <div class="form-group">
+    <label>Phone:</label>
+    <input type="text" name="phone" value="{{ student.phone }}" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Student ID:</label>
+    <input type="text" name="student_id" value="{{ student.student_id }}" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Branch:</label>
+    <input type="text" name="branch" value="{{ student.branch }}" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Year:</label>
+    <input type="text" name="year" value="{{ student.year }}" class="form-control">
+  </div>
+  <button type="submit" class="btn btn-success">Update</button>
+  <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">Cancel</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+/* General body styling */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Navbar styling */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Card shadow and hover effect */
+.card {
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Buttons consistent style */
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0848d1;
+}
+
+.btn-success {
+    background-color: #198754;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #146c43;
+}
+
+/* Form labels styling */
+.form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+/* Table styling */
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #e9f0fb;
+}
+
+/* Alert styling */
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Center content vertically and horizontally on home cards */
+.card-body.text-center {
+    padding: 30px 20px;
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

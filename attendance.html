@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Face Attendance</title>
+</head>
+<body>
+  <h2>Capture your face for attendance</h2>
+  <video id="video" width="320" height="240" autoplay></video>
+  <button id="snap">Mark Attendance</button>
+  <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+
+  <p id="response"></p>
+
+  <script>
+    // Access webcam
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const snapBtn = document.getElementById('snap');
+    const responseText = document.getElementById('response');
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => { video.srcObject = stream; })
+      .catch(err => { console.error("Error accessing webcam: ", err); });
+
+    snapBtn.addEventListener('click', () => {
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      canvas.toBlob((blob) => {
+        const formData = new FormData();
+        formData.append('image', blob, 'capture.jpg');
+
+        fetch('/mark_attendance', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          responseText.innerText = data.message || data.error;
+        })
+        .catch(err => {
+          responseText.innerText = 'Error: ' + err;
+        });
+      }, 'image/jpeg');
+    });
+  </script>
+</body>
+</html>

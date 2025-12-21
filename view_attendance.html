@@ -1,0 +1,18 @@
+{% extends 'admin/base.html' %}
+{% block title %}Attendance – {{ student.name }}{% endblock %}
+{% block content %}
+<h2>Attendance for {{ student.name }} ({{ student.student_id }})</h2>
+<table class="table table-striped">
+  <thead>
+    <tr><th>#</th><th>Date & Time</th></tr>
+  </thead>
+  <tbody>
+    {% for rec in attendance %}
+      <tr><td>{{ loop.index }}</td><td>{{ rec.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td></tr>
+    {% else %}
+      <tr><td colspan="2">No records found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">Back</a>
+{% endblock %}

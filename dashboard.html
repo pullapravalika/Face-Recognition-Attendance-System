@@ -1,0 +1,112 @@
+{% extends 'student/base.html' %}
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Welcome, {{ student.name }}</h2>
+  <p><strong>Branch:</strong> {{ student.branch }} |
+     <strong>Year:</strong> {{ student.year }}</p>
+
+  <!-- quick link to webcam page -->
+  <a href="{{ url_for('student.attendance_page') }}" class="btn btn-primary mb-3">
+    Mark Attendance (Webcam)
+  </a>
+
+  <div class="row my-4">
+    <div class="col-md-4">
+      <img src="{{ url_for('static', filename='uploads/' ~ student.photo_filename) }}"
+           alt="Profile Photo" class="img-thumbnail rounded shadow w-100">
+    </div>
+    <div class="col-md-8">
+      <h4>Profile Details</h4>
+      <table class="table table-bordered">
+        <tbody>
+          <tr><th>Name</th><td>{{ student.name }}</td></tr>
+          <tr><th>Email</th><td>{{ student.email }}</td></tr>
+          <tr><th>Phone</th><td>{{ student.phone }}</td></tr>
+          <tr><th>Student&nbsp;ID</th><td>{{ student.student_id }}</td></tr>
+          <tr><th>Father's&nbsp;Name</th><td>{{ student.father_name }}</td></tr>
+          <tr><th>DOB</th><td>{{ student.dob }}</td></tr>
+          <tr><th>Gender</th><td>{{ student.gender }}</td></tr>
+          <tr><th>Address</th><td>{{ student.address }}</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3 class="mt-5">Your Attendance Records</h3>
+<table class="table table-bordered mt-3">
+  <thead>
+    <tr>
+      <th>Date&nbsp;&amp;&nbsp;Time</th>
+      <th>Subject</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Status</th>
+      <th>Duration&nbsp;(min)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in attendance %}
+      <tr>
+        <td>{{ r.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+        <td>{{ r.session.subject }}</td>
+        <td>{{ r.session.start_time.strftime('%H:%M') }}</td>
+        <td>{{ r.session.end_time.strftime('%H:%M') }}</td>
+        <td>
+          {% if r.present %}
+            <span class="badge bg-success">Present</span>
+          {% else %}
+            <span class="badge bg-danger">Absent</span>
+          {% endif %}
+        </td>
+        <td>{{ (r.presence_seconds / 60) | round(1) }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="6" class="text-center">No attendance records found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+  <!-- Pie‑chart summary -->
+  <h4 class="mt-4">Attendance Summary</h4>
+  <canvas id="attChart" width="400" height="200"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    new Chart(document.getElementById("attChart"), {
+      type: "pie",
+      data: {
+        labels: ["Present", "Absent"],
+        datasets: [{
+          data: [{{ present_count }}, {{ absent_count }}],
+          backgroundColor: ["#28a745", "#dc3545"]
+        }]
+      },
+      options: { plugins: { legend: { position: "bottom" } } }
+    });
+  </script>
+
+  <!-- Class schedule -->
+  <h3 class="mt-5">Class Sessions</h3>
+  <table class="table table-bordered mt-3">
+    <thead>
+      <tr><th>ID</th><th>Day</th><th>subject</th><th>Start</th><th>End</th></tr>
+    </thead>
+    <tbody>
+      {% for s in sessions %}
+        <tr>
+          <td>{{ s.id }}</td>
+          <td>{{ s.day }}</td>
+          <td>{{ s.subject }}</td>
+          <td>{{ s.start_time.strftime('%H:%M') }}</td>
+          <td>{{ s.end_time.strftime('%H:%M') }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="3" class="text-center">No class sessions available.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
