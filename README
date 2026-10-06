@@ -11,6 +11,8 @@ It captures faces through a camera and automatically marks attendance.
 - Face Recognition (AI-based)
 - NumPy
 - AI
+- Flask
+- MySql
 
 ## Features
 - Real-time face detection and recognition
